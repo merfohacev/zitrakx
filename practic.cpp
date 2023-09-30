@@ -1,30 +1,33 @@
 ﻿#include <iostream>
 #include <fstream>
 #include <string>
-#include
-#include <stdio.h>
+#include "date.h"
+#include "planet.h"
+#include <vector>
 
 using namespace std;
 
 
+void reader(ifstream& ist, vector <Planet>& planetVector) {
+	while (false == ist.eof()) {
+		Planet planet;
+		ist >> planet;
+		planetVector.push_back(planet);
+	}
+}
+
+void output(vector <Planet> planetVector) {
+	for (Planet planet : planetVector) {
+		cout << planet << endl;
+	}
+}
 int main() {
 	setlocale(LC_ALL, "Ru");
 	string path = "test.txt";
 	ifstream fs;
 	fs.open(path, fstream::out);
-	if (!fs.is_open()) {
-		cout << "Ошибка открытия файла" << endl;
-	}
-	else {
-		while (true)
-		{
-			planet s;
-			fs >> s;
-			cout << s << endl;
-			if (fs.eof()) {
-				break;
-			}
-		}
-	}
+	vector <Planet> planetVector;
+	reader(fs, planetVector);
+	output(planetVector);
 	return 0;
 }
